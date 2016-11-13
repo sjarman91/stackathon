@@ -2,7 +2,7 @@
 
 const NEW_TWEET = 'NEW_TWEET'
 const START_SESSION = 'START_SESSION'
-const initialCount = 0
+const initialCount = 0;
 
 
 /* ------------------------- TWEET COUNT REDUCER ------------------------ */

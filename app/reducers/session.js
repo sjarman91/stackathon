@@ -15,7 +15,7 @@ const initialSession = { start: 0,
 
 export const start = () => ({type: START_SESSION})
 export const end = () => ({type: END_SESSION})
-export const addSample = () => ({type: ADD_SAMPLE, sample})
+export const addSample = (sample) => ({type: ADD_SAMPLE, sample})
 
 
 /* --------------------------- SESSION REDUCER -------------------------- */
@@ -25,7 +25,7 @@ export const sessionReducer = function(state = initialSession, action) {
   switch(action.type) {
 
     case START_SESSION:
-      return Object.assign({}, state, {start: Date.now(), active: true})
+      return Object.assign({}, initialSession, {active: true, start: Date.now()})
 
     case END_SESSION:
       return Object.assign({}, state, {active: false})

@@ -3,8 +3,8 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
 import { tweetsReducer } from './tweets'
-import { tweetCountReducer } from './tweetcount'
 import { sessionReducer } from './session'
+import { tweetCountReducer } from './tweetcount'
 import { cloudReducer } from './cloud'
 import { locationReducer } from './location'
 import { socketReducer } from './socket'
@@ -13,8 +13,8 @@ import { socketReducer } from './socket'
 /* ------------------- CREATING REDUX STORE ------------------ */
 
 const rootReducer = combineReducers({
-  tweetCount: tweetCountReducer,
   tweets: tweetsReducer,
+  tweetCount: tweetCountReducer,
   session: sessionReducer,
   cloud: cloudReducer,
   location: locationReducer,

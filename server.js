@@ -33,11 +33,12 @@ app.get('/*', (req, res) => {
 const StreamListener = require('./server/stream-listener')
 const streamListeners = {}
 
-/* ----------------------- REAL DATA --------------------------- */
 
+/* ---------------------- INITIAL TRACK -------------------------- */
 // let tweetId = 0
-// let track = {track: 'javascript'}
+// let track = {track: 'michigan'}
 // const client = new Twitter(credentials);
+
 // let stream = client.stream('statuses/filter', track);
 
 // stream.on('error', function(error) {
@@ -46,11 +47,13 @@ const streamListeners = {}
 
 // stream.on('data', function(tweet) {
 //   console.log('tweet received')
+//   let userName = tweet.user ? tweet.user.name : 'anonymous';
+//   let userPop = tweet.user ? tweet.user.followers_count : 0;
 //   let parsedTweet = {id: tweetId++,
 //                      text: tweet.text,
 //                      coordinates: tweet.coordinates,
-//                      user: tweet.user.name,
-//                      userPop: tweet.user.followers_count
+//                      user: userName,
+//                      userPop: userPop
 //                    }
 
 //   for (let listener in streamListeners) {
@@ -60,6 +63,35 @@ const streamListeners = {}
 //   }
 
 // });
+
+/* ----------------------- SWITCH TRACKS --------------------------- */
+
+// function switchTrack(newTrack) {
+//   stream.destroy()
+//   stream = client.stream('statuses/filter', {track: newTrack});
+
+//   stream.on('error', function(error) {
+//     throw error;
+//   });
+
+//   stream.on('data', function(tweet) {
+//     console.log('tweet received')
+//     let userName = tweet.user ? tweet.user.name : 'anonymous';
+//     let userPop = tweet.user ? tweet.user.followers_count : 0;
+//     let parsedTweet = {id: tweetId++,
+//                        text: tweet.text,
+//                        coordinates: tweet.coordinates,
+//                        user: userName,
+//                        userPop: userPop
+//                      }
+
+//     for (let listener in streamListeners) {
+//       if (streamListeners[listener].sendData) {
+//         streamListeners[listener].emitTweet(parsedTweet)
+//       }
+//     }
+//   });
+// }
 
 /* ----------------------- TEST DATA --------------------------- */
 
@@ -97,6 +129,11 @@ io.on('connection', function(socket){
   socket.on('stop', () => {
     streamListeners[socket.id].stop()
     console.log('stopped')
+  })
+
+  socket.on('switch', (topic) => {
+    // switchTrack(topic)
+    console.log('switch to: ', topic)
   })
 
   // event that runs anytime a socket disconnects
