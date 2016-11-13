@@ -13,10 +13,8 @@ import App from './components/app.js'
 import TweetContainer from './components/recent.js'
 import Cloud from './components/cloud.js'
 
-import { start } from './reducers/session.js'
 import { receiveNewTweet } from './reducers/tweets'
 import { setSocket } from './reducers/socket'
-// import SocketConnect from './socket-connect'
 
 const socket = io(window.location.origin);
 
@@ -29,7 +27,6 @@ socket.on('tweet', function(tweet){
 })
 
 const onAppEnter = () => {
-  store.dispatch(start())
   store.dispatch(setSocket(socket))
 }
 

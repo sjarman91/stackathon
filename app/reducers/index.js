@@ -9,6 +9,9 @@ import { cloudReducer } from './cloud'
 import { locationReducer } from './location'
 import { socketReducer } from './socket'
 
+
+/* ------------------- CREATING REDUX STORE ------------------ */
+
 const rootReducer = combineReducers({
   tweetCount: tweetCountReducer,
   tweets: tweetsReducer,

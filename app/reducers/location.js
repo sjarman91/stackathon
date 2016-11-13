@@ -1,6 +1,10 @@
-const NEW_TWEET = 'NEW_TWEET'
+/* ------------------------------ CONSTANTS ----------------------------- */
 
+const NEW_TWEET = 'NEW_TWEET'
 const initialLocations = []
+
+
+/* -------------------------- LOCATION REDUCER ------------------------- */
 
 export const locationReducer = function(state = initialLocations, action) {
   switch(action.type) {

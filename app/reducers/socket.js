@@ -1,13 +1,15 @@
+/* ------------------------------ CONSTANTS ----------------------------- */
 
 const SET_SOCKET = 'SET_SOCKET';
+const initialState = {};
+
+/* --------------------------- ACTION CREATORS -------------------------- */
 
 export const setSocket = socket => ({ type: SET_SOCKET, socket });
 
-// export const createSocket = socket => dispatch => {
-//   dispatch(setSocket(socket));
-// };
 
-const initialState = '';
+/* --------------------------- SOCKET REDUCER -------------------------- */
+
 
 export const socketReducer = (state = initialState, action) => {
   switch (action.type) {
