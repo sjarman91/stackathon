@@ -35,84 +35,84 @@ const streamListeners = {}
 
 
 /* ---------------------- INITIAL TRACK -------------------------- */
-// let tweetId = 0
-// let track = {track: 'michigan'}
-// const client = new Twitter(credentials);
+let tweetId = 0
+let track = {track: 'michigan'}
+const client = new Twitter(credentials);
 
-// let stream = client.stream('statuses/filter', track);
+let stream = client.stream('statuses/filter', track);
 
-// stream.on('error', function(error) {
-//   throw error;
-// });
+stream.on('error', function(error) {
+  throw error;
+});
 
-// stream.on('data', function(tweet) {
-//   console.log('tweet received')
-//   let userName = tweet.user ? tweet.user.name : 'anonymous';
-//   let userPop = tweet.user ? tweet.user.followers_count : 0;
-//   let parsedTweet = {id: tweetId++,
-//                      text: tweet.text,
-//                      coordinates: tweet.coordinates,
-//                      user: userName,
-//                      userPop: userPop
-//                    }
+stream.on('data', function(tweet) {
+  console.log('tweet received')
+  let userName = tweet.user ? tweet.user.name : 'anonymous';
+  let userPop = tweet.user ? tweet.user.followers_count : 0;
+  let parsedTweet = {id: tweetId++,
+                     text: tweet.text,
+                     coordinates: tweet.coordinates,
+                     user: userName,
+                     userPop: userPop
+                   }
 
-//   for (let listener in streamListeners) {
-//     if (streamListeners[listener].sendData) {
-//       streamListeners[listener].emitTweet(parsedTweet)
-//     }
-//   }
+  for (let listener in streamListeners) {
+    if (streamListeners[listener].sendData) {
+      streamListeners[listener].emitTweet(parsedTweet)
+    }
+  }
 
-// });
+});
 
 /* ----------------------- SWITCH TRACKS --------------------------- */
 
-// function switchTrack(newTrack) {
-//   stream.destroy()
-//   stream = client.stream('statuses/filter', {track: newTrack});
+function switchTrack(newTrack) {
+  stream.destroy()
+  stream = client.stream('statuses/filter', {track: newTrack});
 
-//   stream.on('error', function(error) {
-//     throw error;
-//   });
+  stream.on('error', function(error) {
+    throw error;
+  });
 
-//   stream.on('data', function(tweet) {
-//     console.log('tweet received')
-//     let userName = tweet.user ? tweet.user.name : 'anonymous';
-//     let userPop = tweet.user ? tweet.user.followers_count : 0;
-//     let parsedTweet = {id: tweetId++,
-//                        text: tweet.text,
-//                        coordinates: tweet.coordinates,
-//                        user: userName,
-//                        userPop: userPop
-//                      }
-
-//     for (let listener in streamListeners) {
-//       if (streamListeners[listener].sendData) {
-//         streamListeners[listener].emitTweet(parsedTweet)
-//       }
-//     }
-//   });
-// }
-
-/* ----------------------- TEST DATA --------------------------- */
-
-let tweetId = 0
-setInterval(function() {
-    console.log('fake tweet created')
-    let wordArr = ['sup', 'bro', 'whatup boss the bro']
-
-    let parsedFakeTweet = {text: wordArr[Math.floor(Math.random() * 3)],
-                           coordinates: [0, 1],
-                           user: 'billy bob',
-                           userPop: 1,
-                           id: tweetId++
-                         }
+  stream.on('data', function(tweet) {
+    console.log('tweet received')
+    let userName = tweet.user ? tweet.user.name : 'anonymous';
+    let userPop = tweet.user ? tweet.user.followers_count : 0;
+    let parsedTweet = {id: tweetId++,
+                       text: tweet.text,
+                       coordinates: tweet.coordinates,
+                       user: userName,
+                       userPop: userPop
+                     }
 
     for (let listener in streamListeners) {
       if (streamListeners[listener].sendData) {
-        streamListeners[listener].emitTweet(parsedFakeTweet)
+        streamListeners[listener].emitTweet(parsedTweet)
       }
     }
-  }, 5000)
+  });
+}
+
+/* ----------------------- TEST DATA --------------------------- */
+
+// let tweetId = 0
+// setInterval(function() {
+//     console.log('fake tweet created')
+//     let wordArr = ['sup', 'bro', 'whatup boss the bro']
+
+//     let parsedFakeTweet = {text: wordArr[Math.floor(Math.random() * 3)],
+//                            coordinates: [0, 1],
+//                            user: 'billy bob',
+//                            userPop: 1,
+//                            id: tweetId++
+//                          }
+
+//     for (let listener in streamListeners) {
+//       if (streamListeners[listener].sendData) {
+//         streamListeners[listener].emitTweet(parsedFakeTweet)
+//       }
+//     }
+//   }, 5000)
 
 /* ------------------- SOCKET MANAGEMENT ----------------------- */
 
@@ -132,7 +132,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('switch', (topic) => {
-    // switchTrack(topic)
+    switchTrack(topic)
     console.log('switch to: ', topic)
   })
 
