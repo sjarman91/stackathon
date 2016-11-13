@@ -5,16 +5,21 @@ import { connect } from 'react-redux'
 class Home extends Component {
 
   render() {
-    const { tweetCount, tweets, time } = this.props
+    const { tweetCount, tweets, session, socket } = this.props
+
     let tweetsPerMinute = 0
+
     if(tweetCount) {
-      tweetsPerMinute = Math.round(tweetCount / (((time.current - time.start)/1000)/60))
+      tweetsPerMinute = Math.round(tweetCount / (((session.current - session.start)/1000)/60))
     }
+
     return (
         <div className="container">
           <div className="row">
             <div className="col-md-8">
               <h1>Firehose Control:</h1>
+              <button type="button" className="btn btn-primary" onClick={() => {socket.emit('activate')}}>Start Session</button>
+              <button type="button" className="btn btn-primary" onClick={() => {socket.emit('stop')}}>End Session</button>
             </div>
             <div className="col-md-4">
             </div>
@@ -37,7 +42,7 @@ class Home extends Component {
 }
 
 
-const mapStateToProps = state => ({tweetCount: state.tweetCount, tweets: state.tweets, time: state.time})
+const mapStateToProps = state => ({tweetCount: state.tweetCount, tweets: state.tweets, session: state.session, socket: state.socket})
 
 const HomeContainer = connect(mapStateToProps)(Home)
 

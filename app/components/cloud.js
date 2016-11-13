@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-// import socket from '../socket-connect.js'
 
 class TweetCloud extends Component {
 
   componentDidMount() {
-    socket.emit('activate')
+    console.log('tweet cloud mounted')
   }
 
   render() {
-    console.log('rendering cloud')
-    const {cloud} = this.props
+    const { cloud } = this.props
 
     let sortableArr = []
     let val = 0
+
     for (let word in cloud) {
-      if(word)
       sortableArr.push([word, cloud[word], val++])
     }
+
     sortableArr.sort((a, b) => {
       return b[1] - a[1]
     })

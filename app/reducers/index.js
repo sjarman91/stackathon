@@ -1,19 +1,23 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
+
 import { tweetsReducer } from './tweets'
 import { tweetCountReducer } from './tweetcount'
-import { timeReducer } from './time'
+import { sessionReducer } from './session'
 import { cloudReducer } from './cloud'
 import { locationReducer } from './location'
+import { socketReducer } from './socket'
 
 const rootReducer = combineReducers({
   tweetCount: tweetCountReducer,
   tweets: tweetsReducer,
-  time: timeReducer,
+  session: sessionReducer,
   cloud: cloudReducer,
-  location: locationReducer
+  location: locationReducer,
+  socket: socketReducer
 })
+
 const loggerMiddleware = createLogger()
 const middleware = applyMiddleware(thunkMiddleware, loggerMiddleware)
 

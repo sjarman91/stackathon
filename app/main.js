@@ -13,23 +13,32 @@ import App from './components/app.js'
 import TweetContainer from './components/recent.js'
 import Cloud from './components/cloud.js'
 
-// import { start } from './reducers/time.js'
-// import { receiveNewTweet } from './reducers/tweets'
-import SocketConnect from './socket-connect'
+import { start } from './reducers/session.js'
+import { receiveNewTweet } from './reducers/tweets'
+import { setSocket } from './reducers/socket'
+// import SocketConnect from './socket-connect'
 
-// const socket = io(window.location.origin);
+const socket = io(window.location.origin);
 
-// const onAppEnter = () => {
-//   store.dispatch(start())
-//   store.dispatch(createSocket(socket))
-// }
+// set up listeners
+socket.on('connect', function(){
+  console.log('connected to server!');
+})
+socket.on('tweet', function(tweet){
+  store.dispatch(receiveNewTweet(tweet))
+})
+
+const onAppEnter = () => {
+  store.dispatch(start())
+  store.dispatch(setSocket(socket))
+}
 
 
 
 ReactDOM.render(
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/" component={App} onEnter={SocketConnect}>
+        <Route path="/" component={App} onEnter={onAppEnter}>
           <IndexRedirect to="/home" />
           <Route path="/home" component={Home} />
           <Route path="/recent" component={TweetContainer} />
