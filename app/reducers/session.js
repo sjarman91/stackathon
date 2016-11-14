@@ -8,7 +8,7 @@ const CHANGE_TOPIC = 'CHANGE_TOPIC'
 const initialSession = { start: 0,
                          current: 0,
                          samples: [],
-                         topic: 'New York',
+                         topic: 'East Coast - Geotagged',
                          active: false
                        }
 

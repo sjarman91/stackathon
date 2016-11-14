@@ -38,9 +38,10 @@ const streamListeners = {}
 let tweetId = 0
 let coor = 0
 let track = {track: 'new york'}
+let locations = {locations: '-100, 30, -70, 60'}
 const client = new Twitter(credentials);
 
-let stream = client.stream('statuses/filter', track);
+let stream = client.stream('statuses/filter', locations);
 
 stream.on('error', function(error) {
   throw error;
