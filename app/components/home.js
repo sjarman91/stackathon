@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { start, end, addSample } from '../reducers/session.js'
+import { start, end, addSample, changeTopic } from '../reducers/session.js'
 import Tweet from './tweet.js'
 
 
@@ -25,14 +25,14 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="text-center">TVIZ Live - Twitter Stream Manager</h1>
+              <h1 className="text-center">TVIZ - Twitter Stream Manager</h1>
               <p className="lead text-center">Monitor your favorite topics in real-time, see what others are saying, and be the first to know breaking news!</p>
               <hr/>
             </div>
           </div>
           <div className="row">
             <div className="col-md-4">
-              <p className="text-center">Current Stream: 'Javascript'</p>
+              <p className="text-center">Current Stream: '{session.topic}'</p>
             </div>
             <div className="col-md-4">
               <p className="text-center">Tweets processed: {tweetCount}</p>
@@ -124,6 +124,7 @@ class Home extends Component {
   onSubmit(event) {
     event.preventDefault()
     this.props.socket.emit('switch', event.target.track.value)
+    this.props.changeTopic(event.target.track.value)
   }
 
 }
@@ -149,7 +150,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   start: () => dispatch(start()),
   end: () => dispatch(end()),
-  addSample: sample => dispatch(addSample(sample))
+  addSample: sample => dispatch(addSample(sample)),
+  changeTopic: topic => dispatch(changeTopic(topic))
 })
 
 const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home)

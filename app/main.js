@@ -43,7 +43,7 @@ ReactDOM.render(
           <Route path="/recent" component={TweetContainer} />
           <Route path="/cloud" component={Cloud} />
           <Route path="/volume" component={Volume} />
-          <Route path="/location" component={Location} />
+          <Route path="/map" component={Location} />
         </Route>
       </Router>
     </Provider>,

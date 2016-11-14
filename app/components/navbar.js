@@ -12,14 +12,14 @@ const Navbar = () => (
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <Link to="/" className="navbar-brand">TVIZ Live</Link>
+      <Link to="/" className="navbar-brand">TVIZ</Link>
     </div>
     <div id="navbar" className="collapse navbar-collapse">
       <ul className="nav navbar-nav">
         <li><Link to="/volume">volume</Link></li>
-        <li><Link to="/cloud">cloud</Link></li>
-        <li><Link to="/location">location</Link></li>
+        <li><Link to="/map">map</Link></li>
         <li><Link to="/recent">recent</Link></li>
+        <li><Link to="/cloud">cloud</Link></li>
       </ul>
     </div>
   </div>

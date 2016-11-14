@@ -26,6 +26,7 @@ class TweetCloud extends Component {
           <div className="row">
             <div className="col-md-8">
               <h1>Word Cloud</h1>
+              <p>(under construction)</p>
             </div>
             <div className="col-md-4">
             </div>

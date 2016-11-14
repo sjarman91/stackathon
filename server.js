@@ -37,7 +37,7 @@ const streamListeners = {}
 /* ---------------------- INITIAL TRACK -------------------------- */
 // let tweetId = 0
 // let coor = 0
-// let track = {track: 'cowboys'}
+// let track = {track: 'trump'}
 // const client = new Twitter(credentials);
 
 // let stream = client.stream('statuses/filter', track);
@@ -50,13 +50,14 @@ const streamListeners = {}
 //   console.log('tweet received')
 //   let userName = tweet.user ? tweet.user.name : 'anonymous';
 //   let userPop = tweet.user ? tweet.user.followers_count : 0;
+//   let coordinates = tweet.coordinates ? tweet.coordinates.coordinates : 0;
 //   let parsedTweet = {id: tweetId++,
 //                      text: tweet.text,
-//                      coordinates: tweet.coordinates,
+//                      coordinates: coordinates,
 //                      user: userName,
 //                      userPop: userPop
 //                    }
-//   if (parsedTweet.coordinates) {console.log(coor++)}
+//   if (coordinates) {console.log(coor++)}
 
 //   for (let listener in streamListeners) {
 //     if (streamListeners[listener].sendData) {
@@ -103,7 +104,7 @@ setInterval(function() {
     let wordArr = ['sup', 'bro', 'whatup boss the bro']
 
     let parsedFakeTweet = {text: wordArr[Math.floor(Math.random() * 3)],
-                           coordinates: [0, 1],
+                           coordinates: [55, 37],
                            user: 'billy bob',
                            userPop: 1,
                            id: tweetId++
