@@ -35,87 +35,87 @@ const streamListeners = {}
 
 
 /* ---------------------- INITIAL TRACK -------------------------- */
-// let tweetId = 0
-// let coor = 0
-// let track = {track: 'trump'}
-// const client = new Twitter(credentials);
+let tweetId = 0
+let coor = 0
+let track = {track: 'new york'}
+const client = new Twitter(credentials);
 
-// let stream = client.stream('statuses/filter', track);
+let stream = client.stream('statuses/filter', track);
 
-// stream.on('error', function(error) {
-//   throw error;
-// });
+stream.on('error', function(error) {
+  throw error;
+});
 
-// stream.on('data', function(tweet) {
-//   console.log('tweet received')
-//   let userName = tweet.user ? tweet.user.name : 'anonymous';
-//   let userPop = tweet.user ? tweet.user.followers_count : 0;
-//   let coordinates = tweet.coordinates ? tweet.coordinates.coordinates : 0;
-//   let parsedTweet = {id: tweetId++,
-//                      text: tweet.text,
-//                      coordinates: coordinates,
-//                      user: userName,
-//                      userPop: userPop
-//                    }
-//   if (coordinates) {console.log(coor++)}
+stream.on('data', function(tweet) {
+  console.log('tweet received')
+  let userName = tweet.user ? tweet.user.name : 'anonymous';
+  let userPop = tweet.user ? tweet.user.followers_count : 0;
+  let coordinates = tweet.coordinates ? tweet.coordinates.coordinates : 0;
+  let parsedTweet = {id: tweetId++,
+                     text: tweet.text,
+                     coordinates: coordinates,
+                     user: userName,
+                     userPop: userPop
+                   }
+  if (coordinates) {console.log(coor++)}
 
-//   for (let listener in streamListeners) {
-//     if (streamListeners[listener].sendData) {
-//       streamListeners[listener].emitTweet(parsedTweet)
-//     }
-//   }
+  for (let listener in streamListeners) {
+    if (streamListeners[listener].sendData) {
+      streamListeners[listener].emitTweet(parsedTweet)
+    }
+  }
 
-// });
+});
 
 /* ----------------------- SWITCH TRACKS --------------------------- */
 
-// function switchTrack(newTrack) {
-//   stream.destroy()
-//   stream = client.stream('statuses/filter', {track: newTrack});
+function switchTrack(newTrack) {
+  stream.destroy()
+  stream = client.stream('statuses/filter', {track: newTrack});
 
-//   stream.on('error', function(error) {
-//     throw error;
-//   });
+  stream.on('error', function(error) {
+    throw error;
+  });
 
-//   stream.on('data', function(tweet) {
-//     console.log('tweet received')
-//     let userName = tweet.user ? tweet.user.name : 'anonymous';
-//     let userPop = tweet.user ? tweet.user.followers_count : 0;
-//     let parsedTweet = {id: tweetId++,
-//                        text: tweet.text,
-//                        coordinates: tweet.coordinates,
-//                        user: userName,
-//                        userPop: userPop
-//                      }
-
-//     for (let listener in streamListeners) {
-//       if (streamListeners[listener].sendData) {
-//         streamListeners[listener].emitTweet(parsedTweet)
-//       }
-//     }
-//   });
-// }
-
-/* ----------------------- TEST DATA --------------------------- */
-
-let tweetId = 0
-setInterval(function() {
-    console.log('fake tweet created')
-    let wordArr = ['sup', 'bro', 'whatup boss the bro']
-
-    let parsedFakeTweet = {text: wordArr[Math.floor(Math.random() * 3)],
-                           coordinates: [55, 37],
-                           user: 'billy bob',
-                           userPop: 1,
-                           id: tweetId++
-                         }
+  stream.on('data', function(tweet) {
+    console.log('tweet received')
+    let userName = tweet.user ? tweet.user.name : 'anonymous';
+    let userPop = tweet.user ? tweet.user.followers_count : 0;
+    let parsedTweet = {id: tweetId++,
+                       text: tweet.text,
+                       coordinates: tweet.coordinates,
+                       user: userName,
+                       userPop: userPop
+                     }
 
     for (let listener in streamListeners) {
       if (streamListeners[listener].sendData) {
-        streamListeners[listener].emitTweet(parsedFakeTweet)
+        streamListeners[listener].emitTweet(parsedTweet)
       }
     }
-  }, 5000)
+  });
+}
+
+/* ----------------------- TEST DATA --------------------------- */
+
+// let tweetId = 0
+// setInterval(function() {
+//     console.log('fake tweet created')
+//     let wordArr = ['sup', 'bro', 'whatup boss the bro']
+
+//     let parsedFakeTweet = {text: wordArr[Math.floor(Math.random() * 3)],
+//                            coordinates: [55, 37],
+//                            user: 'jim',
+//                            userPop: 1,
+//                            id: tweetId++
+//                          }
+
+//     for (let listener in streamListeners) {
+//       if (streamListeners[listener].sendData) {
+//         streamListeners[listener].emitTweet(parsedFakeTweet)
+//       }
+//     }
+//   }, 5000)
 
 /* ------------------- SOCKET MANAGEMENT ----------------------- */
 

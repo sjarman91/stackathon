@@ -1,10 +1,8 @@
 /* ------------------------------ CONSTANTS ----------------------------- */
 
 const NEW_TWEET = 'NEW_TWEET'
+const START_SESSION = 'START_SESSION'
 const initialCloud = {}
-const useless = ['the', 'is', 'on', 'in', 'of', 'with', 'to', 'at',
-                 'and', 'a', 'up', 'for', 'will', 'this', 'that', 'out']
-
 
 /* ---------------------------- CLOUD REDUCER --------------------------- */
 
@@ -13,6 +11,9 @@ export const cloudReducer = function(state = initialCloud, action) {
 
     case NEW_TWEET:
       return Object.assign({}, addTweetToCloud(action.tweet, state))
+
+    case START_SESSION:
+      return {}
 
     default: return state;
   }

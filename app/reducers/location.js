@@ -14,7 +14,7 @@ export const locationReducer = function(state = initialLocations, action) {
 
     case NEW_TWEET:
       if (action.tweet.coordinates) {
-         return [...state, {name: action.tweet.user, lat: action.tweet.coordinates[0], lon: action.tweet.coordinates[1]}]
+         return [...state, {name: action.tweet.user, lat: action.tweet.coordinates[1], lon: action.tweet.coordinates[0]}]
       } else {
         return state
       }
