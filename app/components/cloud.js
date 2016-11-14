@@ -14,7 +14,7 @@ class TweetCloud extends Component {
     let val = 0
 
     for (let word in cloud) {
-      sortableArr.push([word, cloud[word], val++])
+      sortableArr.push([word, cloud[word]])
     }
 
     sortableArr.sort((a, b) => {
@@ -33,8 +33,8 @@ class TweetCloud extends Component {
           <hr/>
           <div className="row">
             <div className="col-md-12">
-            {sortableArr && sortableArr.map(word =>{
-              return (<p key={word[3]}>{word[0]} - {word[1]}x</p>)
+            {sortableArr && sortableArr.slice(0,100).map(word =>{
+              return (<p key={val++}>{word[0]} - {word[1]}x</p>)
               })
             }
             </div>

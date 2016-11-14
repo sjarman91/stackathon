@@ -23,17 +23,26 @@ export const cloudReducer = function(state = initialCloud, action) {
 
 function addTweetToCloud(tweet, state) {
   if (tweet.text) {
-    tweet.text.split(" ").forEach(word => {
-      if(useless.indexOf(word) === -1) {
-        word = word.toLowerCase();
-        if(state[word]) {
-          state[word] = state[word] + 1
+    if(tweet.text.slice(0,2) === 'RT') {
+        if(state[tweet.text]) {
+          state[tweet.text] = state[tweet.text] + 1
         }
         else {
-          state[word] = 1
+          state[tweet.text] = 1
         }
-      }
-    })
+    } else {
+      tweet.text.split(" ").forEach(word => {
+        if(word.length > 5) {
+          word = word.toLowerCase();
+          if(state[word]) {
+            state[word] = state[word] + 1
+          }
+          else {
+            state[word] = 1
+          }
+        }
+      })
+    }
   }
   return state
 }

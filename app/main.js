@@ -6,12 +6,14 @@ import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {connect, Provider} from 'react-redux'
 import io from 'socket.io-client'
 
-import store from './reducers/index.js'
+import store from './reducers/index'
 
-import Home from './components/home.js'
-import App from './components/app.js'
-import TweetContainer from './components/recent.js'
-import Cloud from './components/cloud.js'
+import Home from './components/home'
+import App from './components/app'
+import TweetContainer from './components/recent'
+import Cloud from './components/cloud'
+import Volume from './components/volume'
+import Location from './components/location'
 
 import { receiveNewTweet } from './reducers/tweets'
 import { setSocket } from './reducers/socket'
@@ -40,6 +42,8 @@ ReactDOM.render(
           <Route path="/home" component={Home} />
           <Route path="/recent" component={TweetContainer} />
           <Route path="/cloud" component={Cloud} />
+          <Route path="/volume" component={Volume} />
+          <Route path="/location" component={Location} />
         </Route>
       </Router>
     </Provider>,

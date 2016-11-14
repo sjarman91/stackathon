@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { start, end, addSample } from '../reducers/session.js'
+import Tweet from './tweet.js'
 
 
 /* --------------------------- HOME COMPONENT -------------------------- */
@@ -13,7 +14,6 @@ class Home extends Component {
     this.onEnd = this.onEnd.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.dispatchTPM = this.dispatchTPM.bind(this)
-    this.seconds = 0;
   }
 
   render() {
@@ -24,50 +24,75 @@ class Home extends Component {
     return (
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
-              <h1>Twitter Stream Manager</h1>
+            <div className="col-md-12">
+              <h1 className="text-center">TVIZ Live - Twitter Stream Manager</h1>
+              <p className="lead text-center">Monitor your favorite topics in real-time, see what others are saying, and be the first to know breaking news!</p>
+              <hr/>
             </div>
-            <div className="col-md-6">
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <p className="text-center">Current Stream: 'Javascript'</p>
+            </div>
+            <div className="col-md-4">
+              <p className="text-center">Tweets processed: {tweetCount}</p>
+            </div>
+            <div className="col-md-4">
+              <p className="text-center">Tweets per Minute: {tweetsPerMinute}</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
               <div className="row">
                 <div className="col-md-12">
-                  <form onSubmit={this.onSubmit} className="form-inline">
-                    <div className="form-group">
-                      <label>New Track:</label>
-                      <input name="track" className="form-control" required />
-                    </div>
-                    {session.active ? <button type="submit" className="btn btn-primary disabled">Switch Tracks</button> : <button type="submit" className="btn btn-primary">Switch Tracks</button>
-                    }
-                  </form>
+                  <h3>Control Panel</h3>
+                  <hr/>
                 </div>
+              </div>
+              <div className="row">
                 <div className="col-md-12">
-                  {session.active ? <button type="button" style={{marginTop:10}} className="btn btn-primary disabled" onClick={this.onStart}>Start Session</button> : <button type="button" style={{marginTop:10}} className="btn btn-primary" onClick={this.onStart}>Start Session</button>
-                  }
-                  {session.active ? <button type="button" style={{marginLeft:10, marginTop:10}} className="btn btn-danger" onClick={this.onEnd}>End Session</button> : <button type="button" style={{marginLeft:10, marginTop:10}} className="btn btn-danger disabled" onClick={this.onEnd}>End Session</button>
-                  }
+                  <div className="row">
+                    <div className="col-md-12">
+                      {session.active ? <button type="button" style={{marginBottom:20}} className="btn btn-primary disabled" onClick={this.onStart}>Start Session</button> : <button type="button" style={{marginBottom:20}} className="btn btn-primary" onClick={this.onStart}>Start Session</button>
+                      }
+                      {session.active ? <button type="button" style={{marginLeft:10, marginBottom:20}} className="btn btn-danger" onClick={this.onEnd}>End Session</button> : <button type="button" style={{marginLeft:10, marginBottom:20}} className="btn btn-danger disabled" onClick={this.onEnd}>End Session</button>
+                      }
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <p>Change current stream:</p>
+                      <form onSubmit={this.onSubmit} className="form-inline">
+                        <div className="form-group">
+                          <input name="track" className="form-control" required />
+                        </div>
+                        {session.active ? <button style={{marginLeft:10}} type="submit" className="btn btn-primary disabled">Update Stream</button> : <button style={{marginLeft:10}}  type="submit" className="btn btn-primary">Update Stream</button>
+                        }
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <hr/>
-
-
-          <div className="row">
-            <div className="col-md-6">
-              <h2>Tweet Volume</h2>
-              <hr/>
-            </div>
-            <div className="col-md-6">
-              <h2>Last 5 Tweets:</h2>
-              <hr/>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <p>Tweets processed: {tweetCount}</p>
-              <p>Tweets per Minute: {tweetsPerMinute}</p>
-            </div>
-            <div className="col-md-6">
-              {this.props.tweets && this.props.tweets.slice(0,5).map(tweet => (<p key={tweet.id}>{tweet.text}</p>))}
+            <div className="col-md-8">
+              <div className="row">
+                <div className="col-md-12">
+                  <h3>Last 6 Tweets:</h3>
+                  <hr/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="row">
+                    {this.props.tweets && this.props.tweets.slice(0,6).map(tweet => (
+                      <div key={tweet.id} className="col-md-6">
+                        <Tweet tweet={tweet} />
+                      </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -76,8 +101,7 @@ class Home extends Component {
 
   dispatchTPM() {
       const TPM = caculateTPM(this.props.tweetCount, this.props.session)
-      this.seconds = this.seconds + 15
-      this.props.addSample({TPM: TPM, seconds: this.seconds})
+      this.props.addSample({TPM: TPM, time: Date.now()})
     }
 
   onStart() {
@@ -85,7 +109,7 @@ class Home extends Component {
     this.props.start()
 
     // activate tweets per minute tracking
-    window.loggingInterval = setInterval(this.dispatchTPM, 15000)
+    window.loggingInterval = setInterval(this.dispatchTPM, 5000)
   }
 
   onEnd() {
