@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   tweetCount: tweetCountReducer,
   session: sessionReducer,
   cloud: cloudReducer,
-  location: locationReducer,
+  locations: locationReducer,
   socket: socketReducer
 })
 

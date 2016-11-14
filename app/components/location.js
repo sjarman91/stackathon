@@ -23,7 +23,7 @@ class Location extends Component {
 
             </div>
             <div className="col-md-10">
-            <ChartComponent />
+            <ChartComponent location={location} />
             </div>
             <div className="col-md-1">
             </div>
@@ -60,18 +60,10 @@ function ChartComponent (props) {
 
         series: [{
             // Use the gb-all map with no data as a basemap
-
             mapData: Highcharts.maps['custom/world'],
             borderColor: '#A0A0A0',
             nullColor: 'rgba(200, 200, 200, 0.3)',
             showInLegend: false
-        }, {
-            name: 'Separators',
-            type: 'mapline',
-            data: Highcharts.geojson(Highcharts.maps['custom/world'], 'mappoint'),
-            color: '#707070',
-            showInLegend: false,
-            enableMouseTracking: false
         }, {
             // Specify points using lat/lon
             type: 'mappoint',
@@ -113,11 +105,6 @@ function ChartComponent (props) {
                 name: 'Lerwick',
                 lat: 60.155,
                 lon: -1.145,
-                dataLabels: {
-                    align: 'left',
-                    x: 5,
-                    verticalAlign: 'middle'
-                }
             }]
         }]
     }
